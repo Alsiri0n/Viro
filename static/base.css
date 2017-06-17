@@ -1,0 +1,30 @@
+.form-field {
+    width: 100%;
+    margin: 20px 0;
+}
+
+.form-field .help {
+    font-style: smaller;
+    font-style: italic;
+}
+z
+.form-field .label {
+    margin-bottom: 2px;
+}
+
+.form-field .control input[type=name],
+.form-field .control input[type=password],
+.form-field .control input[type=number],
+.form-field .control input[type=file],
+.form-field .control textarea,
+.form-field .control select {
+    width: 100%;
+}
+
+.submit-button {
+    width: 100%;
+}
+
+.error-list, .error-description {
+    color: #ff0000;
+}
