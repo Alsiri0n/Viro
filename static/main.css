@@ -66,3 +66,32 @@ footer p {
     font-size: smaller;
     font-style: italic;
 }
+
+.honeypot {
+    display: none;
+}
+
+#message-list {
+    background-color: #eee;
+    padding: 5px;
+}
+
+#message-ist .ERROR {
+    color: #ff0000;
+}
+
+#pagination {
+    margin-top: 20px;
+}
+
+#pagination #previous-page {
+    float: left;
+}
+
+#pagination #num-pages {
+    text-align: center;
+}
+
+#pagination #nextpage {
+    float: right;
+}
