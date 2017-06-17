@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block additional_css %}
+    <link rel="stylesheet" href="{% static "main.css" %}">
+{% endblock %}
+{% block content %}
+    <header>
+        <h1>Мониторинг</h1>
+    </header>
+    <aside>
+        {% if user.is_authenticated %}
+        <ul>
+            {% url "main" as page_url %}
+            <li><a href="{{ page_url }}"{% if page_url == current_url %}class="current" {% endif %}>Главная</a></li>
+            <li class="indented"><a href="/djadmin/">Админка</a></li>
+            <li class="indented"><a href="{% url "logout" %}">Выйти</a></li>
+        </ul>
+        {% endif %}
+    </aside>
+    <main>
+        {% block main %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>Разработчик: Игнатьев Н.</p>
+    </footer>
+{% endblock %}

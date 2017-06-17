@@ -1,0 +1,68 @@
+header {
+    text-align: center;
+    border-bottom: 1px #ccc solid;
+}
+header h1 {
+    margin: 20px 0;
+}
+aside {
+    float: left;
+    width: 100px;
+    padding: 10px;
+}
+
+aside ul {
+    margin: 0;
+    padding: 0;
+}
+
+aside ul li {
+    font-style: larger;
+    list-style-type: none;
+    margin: 0;
+}
+
+aside ul li a {
+    display: block;
+}
+
+.indented {
+    margin-top: 20px;
+}
+
+aside ul li a:link, aside ul li a:visited,
+aside ul li a:active, aside ul li a:hover {
+    text-decoration: none;
+}
+
+aside ul li a:link, aside ul li a:visited {
+    color: #0000ff;
+    background-color: #fff;
+}
+
+aside ul li a.current:link, aside ul li a.current:visited,
+aside ul li a.current:active, aside ul li a.current:hover {
+    color: #000;
+    background-color: #ccc;
+}
+
+main {
+    margin-left: 110px;
+    border-left: 1px #ccc solid;
+    padding: 10px;
+}
+
+main h2:first-child {
+    margin: 0 0 10px 0;
+}
+
+footer {
+    text-align: right;
+    border-top: 1px #ccc solid;
+    padding-right: 10px;
+}
+
+footer p {
+    font-size: smaller;
+    font-style: italic;
+}

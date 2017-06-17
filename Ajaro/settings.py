@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django_comments',
+    'main',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,4 @@ STATICFILES_DIRS = [
 SITE_ID = 1
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'main'
