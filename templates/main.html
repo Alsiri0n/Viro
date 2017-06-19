@@ -6,17 +6,21 @@
 {% block content %}
     <header>
         <h1>Мониторинг</h1>
-    </header>
-    <aside>
         {% if user.is_authenticated %}
+        <h3>Вас зовут: {{ user.first_name }} {{ user.last_name }}</h3>
+        <h3>Расположение: {{ user.virouser.region }}</h3>
+        {% endif %}
+    </header>
+    {% if user.is_authenticated %}
+    <aside>
         <ul>
             {% url "main" as page_url %}
             <li><a href="{{ page_url }}"{% if page_url == current_url %}class="current" {% endif %}>Главная</a></li>
             <li class="indented"><a href="/djadmin/">Админка</a></li>
             <li class="indented"><a href="{% url "logout" %}">Выйти</a></li>
         </ul>
-        {% endif %}
     </aside>
+    {% endif %}
     <main>
         {% block main %}
         {% endblock %}
