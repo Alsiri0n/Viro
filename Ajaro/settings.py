@@ -25,7 +25,7 @@ SECRET_KEY = ')@=gvdyx0#j3pnp9r_i$sv*_l^9vt9x1r@4em)5jn6wp9np=ed'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['viro-alsirion.c9users.io', 'localhost']
 
 
 # Application definition
