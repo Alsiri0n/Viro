@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, User
+from criterion.models import Criterion
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -16,9 +17,13 @@ class Region(models.Model):
 class ViroUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     region = models.ForeignKey(Region, verbose_name='Район', default=1)
+    criterion = models.ManyToManyField(Criterion, verbose_name='Критерии',
+                                  default=1)
     REQUIRED_FIELDS = ['region']
 
-
+    class Meta:
+        verbose_name = 'Работник'
+        verbose_name_plural = 'Работники'
 
 # @receiver(post_save, sender=User)
 # def create_or_update_user_profile(sender, instance, created, **kwargs):
@@ -44,7 +49,8 @@ class ViroUser(models.Model):
 #         user.save(using=self._db)
 #         return user
 #
-#         def create_superuser(self, region, name, surname, patronymic, password):
+#         def create_superuser(self, region, name, surname,
+#  patronymic, password):
 #             pass
 #
 #
