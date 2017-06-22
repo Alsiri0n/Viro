@@ -18,6 +18,11 @@
             <li><a href="{{ page_url }}"{% if page_url == current_url %}class="current" {% endif %}>Главная</a></li>
             <li class="indented"><a href="/djadmin/">Админка</a></li>
             <li class="indented"><a href="{% url "logout" %}">Выйти</a></li>
+            {% for criter in criterions %}
+                <li><a href="{% url "criterion" criter.id %}">Критерий {{ criter.number }}</a></li>
+            {% endfor %}
+
+
         </ul>
     </aside>
     {% endif %}

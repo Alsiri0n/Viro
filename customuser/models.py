@@ -17,8 +17,9 @@ class Region(models.Model):
 class ViroUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     region = models.ForeignKey(Region, verbose_name='Район', default=1)
-    criterion = models.ManyToManyField(Criterion, verbose_name='Критерии',
-                                  default=1)
+    criterion = models.ManyToManyField(
+        Criterion,
+        verbose_name='Критерии')
     REQUIRED_FIELDS = ['region']
 
     class Meta:

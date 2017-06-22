@@ -29,8 +29,8 @@ class Criterion(models.Model):
                              verbose_name='Диагностический инструментарий',
                              blank=True)
 
-    # def __str__(self):
-    #     return self.number
+    def __str__(self):
+        return self.number
 
     class Meta:
         verbose_name = 'Критерий'
