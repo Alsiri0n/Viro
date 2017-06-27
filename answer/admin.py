@@ -3,4 +3,8 @@ from answer.models import Answer
 
 # Register your models here.
 
-admin.site.register(Answer)
+
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ('number', 'criterion', 'description')
+
+admin.site.register(Answer, AnswerAdmin)

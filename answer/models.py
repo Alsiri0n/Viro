@@ -4,13 +4,28 @@ from criterion.models import Criterion
 
 
 class Answer(models.Model):
-    criterion = models.ForeignKey(Criterion)
-    description = models.CharField(max_length=500, verbose_name='Название')
-    value = models.CharField(max_length=500, verbose_name='Значение')
+    criterion = models.ForeignKey(Criterion, verbose_name='Критерий')
+    description = models.CharField(max_length=500, verbose_name='Описание')
+    value = models.CharField(max_length=500, verbose_name='Значение',
+                             default=0)
+    #
+    # Номер пользователя*10 000 + номер теста * 100 + номер задания
+    #
+    number = models.PositiveIntegerField(verbose_name='Номер', unique=True)
+
+    @classmethod
+    def create(cls, num, crit, ans):
+        answer = cls(
+            criterion=crit,
+            description=ans.description,
+            value = "0",
+            number = num,
+        )
+        return answer
 
     def __str__(self):
         return self.description
 
     class Meta:
-        verbose_name = 'Вопрос'
-        verbose_name_plural = 'Вопросы'
+        verbose_name = 'Ответ'
+        verbose_name_plural = 'Ответы'

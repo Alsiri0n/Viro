@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, User
-from criterion.models import Criterion
+from criterion.models import CriterionList, Criterion
+from answer.models import Answer
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -13,14 +14,48 @@ class Region(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = 'Район'
+        verbose_name_plural = 'Районы'
+
 
 class ViroUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    region = models.ForeignKey(Region, verbose_name='Район', default=1)
-    criterion = models.ManyToManyField(
-        Criterion,
-        verbose_name='Критерии')
-    REQUIRED_FIELDS = ['region']
+    region = models.ForeignKey(Region, verbose_name='Район', default=None)
+    criterionList = models.ForeignKey(CriterionList,
+                                      verbose_name='Список критериев',
+                                      default=None)
+    number = models.IntegerField(verbose_name="Ид")
+    # criterion = models.ManyToManyField(
+    #     Criterion,
+    #     verbose_name='Критерии')
+    # REQUIRED_FIELDS = ['region']
+
+    def save(self, *args, **kwargs):
+        criterionlist = self.criterionList
+        for crit in criterionlist.criterion.all():
+            # print ("crit.number", crit.number)
+            curcritid = str(self.number * 100 + int(crit.number))
+            if crit.number != curcritid:
+                curCrit = Criterion.create(crit, curcritid)
+                curCrit.save()
+                criterionlist.criterion.add(curCrit)
+                # print("Yep")
+                criterionlist.criterion.remove(crit)
+                criterionlist.save()
+
+            for ans in crit.answer_set.all():
+                curansid = self.number*10000 + int(crit.number) * 100 +\
+                           ans.number
+                if ans.number != curansid:
+                    curAns = Answer.create(curansid, curCrit, ans)
+                    curAns.save()
+
+                    # print("ans.descr", ans.description)
+
+                    # print(crit.answer_set.get(id=7).description)
+        # print(criterionlist.criterion.get(number=1))
+        super(ViroUser, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Работник'
