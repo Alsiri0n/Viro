@@ -6,7 +6,7 @@ from django.db import models
 class Criterion(models.Model):
     year = models.CharField(max_length=4, verbose_name='Год проведения',
                             default="2017")
-    number = models.CharField(max_length=5, verbose_name='Номер', default=1)
+    number = models.PositiveIntegerField(verbose_name='Номер', default=1)
     ages = models.CharField(max_length=40, verbose_name='Возраст детей',
                             blank=True)
     description = models.CharField(max_length=300, verbose_name='Описание')

@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from generic.mixins import CategoryListMixin
-from criterion.models import Criterion
+from criterion.models import Criterion, CriterionList
+from customuser.models import ViroUser
 from answer.models import Answer
 from django import forms
 from django.contrib import messages
@@ -26,14 +27,19 @@ AnswerFormSet = modelformset_factory(Answer, form=AnswersForm, extra=0)
 
 # AnswerFormSet = formset_factory(Answer)
 
+
 class CriterionView(TemplateView, CategoryListMixin):
     template_name = "criterion.html"
-    form= None
+    form = None
 
     def get_context_data(self, **kwargs):
         context = super(CriterionView, self).get_context_data(**kwargs)
         context['criterion'] = Criterion.objects.get(pk=kwargs["criter_id"])
-        context['criterions'] = Criterion.objects.all().order_by('number')
+        # context['criterions'] = Criterion.objects.all().order_by('number')
+        context['criterions'] = CriterionList.objects.get(
+            id=ViroUser.objects.get(
+                region_id=self.request.user.id).criterionList.id).\
+            criterion.all()
         context['answers'] = Answer.objects.filter(criterion_id =kwargs['criter_id'])
         return context
 
@@ -57,7 +63,11 @@ class CriterionUpdate(TemplateView, CategoryListMixin):
     def get_context_data(self, **kwargs):
         context = super(CriterionUpdate, self).get_context_data(**kwargs)
         context['criterion'] = Criterion.objects.get(pk=kwargs["criter_id"])
-        context['criterions'] = Criterion.objects.all().order_by('number')
+        # context['criterions'] = Criterion.objects.all().order_by('number')
+        context['criterions'] = CriterionList.objects.get(
+            id=ViroUser.objects.get(
+                region_id=self.request.user.id).criterionList.id).\
+            criterion.all()
         context['formset'] = self.formset
         context['answers'] = Answer.objects.filter(
             criterion_id=kwargs['criter_id'])

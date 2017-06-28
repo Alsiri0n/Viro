@@ -25,7 +25,7 @@ class ViroUser(models.Model):
     criterionList = models.ForeignKey(CriterionList,
                                       verbose_name='Список критериев',
                                       default=None)
-    number = models.IntegerField(verbose_name="Ид")
+    number = models.PositiveSmallIntegerField(verbose_name="Ид")
     # criterion = models.ManyToManyField(
     #     Criterion,
     #     verbose_name='Критерии')
@@ -35,21 +35,22 @@ class ViroUser(models.Model):
         criterionlist = self.criterionList
         for crit in criterionlist.criterion.all():
             # print ("crit.number", crit.number)
-            curcritid = str(self.number * 100 + int(crit.number))
+            curcritid = self.number * 100 + int(crit.number)
+            cur_crit = None
             if crit.number != curcritid:
-                curCrit = Criterion.create(crit, curcritid)
-                curCrit.save()
-                criterionlist.criterion.add(curCrit)
+                cur_crit = Criterion.create(crit, curcritid)
+                cur_crit.save()
+                criterionlist.criterion.add(cur_crit)
                 # print("Yep")
                 criterionlist.criterion.remove(crit)
                 criterionlist.save()
 
             for ans in crit.answer_set.all():
-                curansid = self.number*10000 + int(crit.number) * 100 +\
+                curansid = self.number*10000 + crit.number * 100 +\
                            ans.number
                 if ans.number != curansid:
-                    curAns = Answer.create(curansid, curCrit, ans)
-                    curAns.save()
+                    cur_ans = Answer.create(curansid, cur_crit, ans)
+                    cur_ans.save()
 
                     # print("ans.descr", ans.description)
 

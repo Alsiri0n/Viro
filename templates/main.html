@@ -19,7 +19,7 @@
             <li class="indented"><a href="/djadmin/">Админка</a></li>
             <li class="indented"><a href="{% url "logout" %}">Выйти</a></li>
             {% for criter in criterions %}
-                <li><a href="{% url "criterion" criter.id %}">Критерий {{ criter.number }}</a></li>
+                <li><a href="{% url "criterion" criter.id %}">Критерий {{ forloop.counter }}</a></li>
             {% endfor %}
 
 

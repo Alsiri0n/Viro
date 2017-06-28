@@ -14,12 +14,12 @@ class Answer(models.Model):
     number = models.PositiveIntegerField(verbose_name='Номер', unique=True)
 
     @classmethod
-    def create(cls, num, crit, ans):
+    def create(cls, num_, crit, ans):
         answer = cls(
             criterion=crit,
             description=ans.description,
-            value = "0",
-            number = num,
+            value="0",
+            number=num_,
         )
         return answer
 
