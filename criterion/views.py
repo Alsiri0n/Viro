@@ -40,13 +40,15 @@ class CriterionView(TemplateView, CategoryListMixin):
             id=ViroUser.objects.get(
                 region_id=self.request.user.id).criterionList.id).\
             criterion.all()
-        context['answers'] = Answer.objects.filter(criterion_id =kwargs['criter_id'])
+        context['answers'] = Answer.objects.filter(
+            criterion_id=kwargs['criter_id'])
         return context
 
 
 class CriterionUpdate(TemplateView, CategoryListMixin):
     template_name = "criterion.html"
     formset = None
+
     def get(self, request, *args, **kwargs):
         # answer = Answer.objects.get(criterion_id=self.kwargs['criter_id'])
         # self.formset = AnswersForm(instance=answer)

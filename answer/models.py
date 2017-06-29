@@ -7,7 +7,7 @@ class Answer(models.Model):
     criterion = models.ForeignKey(Criterion, verbose_name='Критерий')
     description = models.CharField(max_length=500, verbose_name='Описание')
     value = models.CharField(max_length=500, verbose_name='Значение',
-                             default=0)
+                             default='0')
     #
     # Номер пользователя*10 000 + номер теста * 100 + номер задания
     #
@@ -18,7 +18,7 @@ class Answer(models.Model):
         answer = cls(
             criterion=crit,
             description=ans.description,
-            value="0",
+            value=ans.value,
             number=num_,
         )
         return answer

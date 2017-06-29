@@ -15,5 +15,6 @@ class MainPageView(TemplateView, CategoryListMixin):
         if self.request.user.pk is not None:
             context['criterions'] = CriterionList.objects.get(
                 id=ViroUser.objects.get(
-                    region_id=self.request.user.id).criterionList.id).criterion.all()
+                    region_id=self.request.user.id).criterionList.id).\
+                criterion.all()
         return context

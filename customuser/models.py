@@ -34,20 +34,21 @@ class ViroUser(models.Model):
     def save(self, *args, **kwargs):
         criterionlist = self.criterionList
         for crit in criterionlist.criterion.all():
-            # print ("crit.number", crit.number)
-            curcritid = self.number * 100 + int(crit.number)
+            # user-year-crit 1 17 01=> 11 701
+            curcritid = self.number * 10000 + (crit.year - 2000) * 100 +\
+                        crit.number
             cur_crit = None
             if crit.number != curcritid:
                 cur_crit = Criterion.create(crit, curcritid)
                 cur_crit.save()
                 criterionlist.criterion.add(cur_crit)
-                # print("Yep")
                 criterionlist.criterion.remove(crit)
                 criterionlist.save()
 
             for ans in crit.answer_set.all():
-                curansid = self.number*10000 + crit.number * 100 +\
-                           ans.number
+                # user-year-crit-ans: 1 17 01 01 1 170 101
+                curansid = self.number * 1000000 + (crit.year - 2000) * 10000 + \
+                           crit.number * 100 + ans.number
                 if ans.number != curansid:
                     cur_ans = Answer.create(curansid, cur_crit, ans)
                     cur_ans.save()
@@ -61,7 +62,6 @@ class ViroUser(models.Model):
     class Meta:
         verbose_name = 'Работник'
         verbose_name_plural = 'Работники'
-
 # @receiver(post_save, sender=User)
 # def create_or_update_user_profile(sender, instance, created, **kwargs):
 #     if created:

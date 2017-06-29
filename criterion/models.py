@@ -4,8 +4,8 @@ from django.db import models
 
 
 class Criterion(models.Model):
-    year = models.CharField(max_length=4, verbose_name='Год проведения',
-                            default="2017")
+    year = models.PositiveSmallIntegerField(verbose_name='Год проведения',
+                                            default=2017)
     number = models.PositiveIntegerField(verbose_name='Номер', default=1)
     ages = models.CharField(max_length=40, verbose_name='Возраст детей',
                             blank=True)
@@ -24,7 +24,7 @@ class Criterion(models.Model):
                              blank=True)
 
     def __str__(self):
-        return self.number
+        return str(self.number)
 
     @classmethod
     def create(cls, crit, num):
