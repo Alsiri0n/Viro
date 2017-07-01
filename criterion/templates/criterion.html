@@ -1,28 +1,40 @@
 {% extends "main.html" %}
 
+
+
 {% block title %}
     Критерий
 {% endblock %}
 {% block main %}
     {% include "generic/messages.html" %}
-    <p>{{ criterion.description }}</p>
-    <p>{{ criterion.ages }}</p>
-    <p>{{ criterion.subject }}</p>
-    <p>{{ criterion.goal }}</p>
-    <p>{{ criterion.tools }}</p>
-    <p>{{ criterion.responsble }}</p>
-
-    <form action="" method="post">
+    <div class="criterion-description">
+        <p>{{ criterion.description }}</p>
+        <p><b>Возраст: </b>{{ criterion.ages }}</p>
+        <p><b>Предмет исследования: </b>{{ criterion.subject }}</p>
+        <p><b>Цель: </b>{{ criterion.goal }}</p>
+        <p><b>Срок проведения: </b>{{ criterion.deadline }}</p>
+        <p><b>Диагностический инструментарий: </b>{{ criterion.tools }}</p>
+        <p><b>Ответственный за проведение: </b>{{ criterion.responsible }}</p>
+    </div>
+    
+    <form action="" method="post" class = "form">
         {% csrf_token %}
         {{ formset.management_form }}
         {% for form in formset %}
-            {{ form.as_p }}
+        <div class="form-group">
+            {% for field in form %}
+                {% if field.name == "description" %}
+                    <p>
+                    {{ field.value }} :&nbsp;
+                    </p>
+                {% else %}
+                    {{ field }}
+                {% endif %}
+            {% endfor %}
+  
+        </div>
         {% endfor %}
         <div class="submit-button"><input type="submit" value="Сохранить"></div>
     </form>
 
-    <!--<form action="" method="post">-->
-        <!--{% include "generic/form.html" %}-->
-        <!--<div class="submit-button"><input type="submit" value="Сохранить"></div>-->
-    <!--</form>-->
 {% endblock %}

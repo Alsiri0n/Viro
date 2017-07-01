@@ -1,9 +1,17 @@
 header {
     text-align: center;
-    border-bottom: 1px #ccc solid;
+    padding-top: 1vh;
 }
 header h1 {
-    margin: 20px 0;
+    margin: 0 0 20px 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+    color: #323232;
+}
+h3 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: #323232;
 }
 aside {
     float: left;
@@ -94,4 +102,10 @@ footer p {
 
 #pagination #nextpage {
     float: right;
+}
+
+.spacer {
+    background: linear-gradient(to right, #feac5e, #c779d0, #4bc0c8);
+    height: 1px;
+    border: none;
 }

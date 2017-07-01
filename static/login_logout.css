@@ -1,10 +1,57 @@
-#ll {
-    width: 160px;
-    margin: 50px auto 0 auto;
-    padding: 30px;
-    border: 1px solid #aaa;
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	text-align: center;
 }
 
+#ll {
+    display: flex;
+    flex-direction: column;
+    /*width: 160px;*/
+    /*padding: 30px;*/
+}
+#ll>form {
+    display: flex;
+    flex-direction: column;
+}
 #ll h2 {
-    margin-top: 0;
+    font-family: 'Roboto', sans-serif;
+    margin: 0 0 3vh 0;
+    font-weight: 100;
+    color: #323232;
+}
+.login-input {
+    display: inline-block;
+    margin: .5vh 1vw;
+}
+.login-input>input {
+    padding: 5px;
+    border: 1px solid transparent;
+	border-image: linear-gradient(to right, #feac5e, #c779d0, #4bc0c8);
+	border-image-slice: 1;
+}
+
+.submit-button {
+    margin: 3vh 0;
+}
+.submit-button>input {
+    font-family: 'Raleway-Light', sans-serif;
+    background: #5ac8fa;
+    padding: 10px 20px;
+    border: 1px solid transparent;
+    color: white;
+    transition: all .2s ease-in-out;
+}
+.submit-button>input:hover, .submit-button>input:focus {
+    border-radius: 20px;
+    color: #5ac8fa;
+    background: transparent;
+    border: 1px solid #5ac8fa;
+    outline: none;
+}
+.submit-button>input:active {
+    color: white;
+    background: #5ac8fa;
 }

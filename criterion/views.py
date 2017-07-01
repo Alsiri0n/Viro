@@ -19,10 +19,19 @@ class AnswersForm(forms.ModelForm):
         fields = ['description', 'value']
 
     description = forms.CharField(
-        label='Описание',
-        widget=forms.Textarea(attrs={'readonly': 'readonly', 'cols': 5, 'rows': 5})
+        label='',
+        widget=forms.Textarea(
+            attrs={'readonly': 'readonly', 'class': 'output-area'})
     )
-    value = forms.CharField(label='Значение')
+    value = forms.CharField(
+        label='',
+        widget=forms.TextInput(
+            attrs={'class': 'input-area'})
+    )
+    # value = forms.CharField(label='', widget=forms.Textarea(
+    #     attrs={'class': 'input-area'}))
+    
+
     # criterion = Criterion.objects.filter(pk=1)
 
 AnswerFormSet = modelformset_factory(Answer, form=AnswersForm, extra=0)

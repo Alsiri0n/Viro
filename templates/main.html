@@ -2,14 +2,15 @@
 {% load staticfiles %}
 {% block additional_css %}
     <link rel="stylesheet" href="{% static "main.css" %}">
+    <link rel="stylesheet" href="{% static "criterion.css" %}">
 {% endblock %}
 {% block content %}
     <header>
         <h1>Мониторинг</h1>
         {% if user.is_authenticated %}
-        <h3>Вас зовут: {{ user.first_name }} {{ user.last_name }}</h3>
-        <h3>Расположение: {{ user.virouser.region }}</h3>
+        <h3>Вы - {{ user.first_name }} {{ user.last_name }}, {{ user.virouser.region }}</h3>
         {% endif %}
+        <hr class = "spacer">
     </header>
     {% if user.is_authenticated %}
     <aside>
@@ -17,7 +18,7 @@
             {% url "main" as page_url %}
             <li><a href="{{ page_url }}"{% if page_url == current_url %}class="current" {% endif %}>Главная</a></li>
             <li class="indented"><a href="/djadmin/">Админка</a></li>
-            <li class="indented"><a href="{% url "logout" %}">Выйти</a></li>
+            <!--<li class="indented"><a href="{% url "logout" %}">Выйти</a></li>-->
             {% for criter in criterions %}
                 <li><a href="{% url "criterion" criter.id %}">Критерий {{ forloop.counter }}</a></li>
             {% endfor %}
@@ -26,7 +27,7 @@
         </ul>
     </aside>
     {% endif %}
-    <main>
+    <main class = "main">
         {% block main %}
         {% endblock %}
     </main>
