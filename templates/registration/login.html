@@ -3,7 +3,11 @@
 {% block ll %}
     <h2>Вход</h2>
     <form action="" method="post">
-        {% include "generic/form.html" %}
+        <!--{% include "generic/form.html" %}-->
+        <form action="" method="post">
+        {% csrf_token %}
+            {{ form.username.label }}{{ form.username }}
+            {{ form.password.label }}{{ form.password }}
         <div class="submit-button"><input type="submit" value="Войти"></div>
         <input type="hidden" name="next" value="{{ next }}">
     </form>

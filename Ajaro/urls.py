@@ -16,10 +16,11 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth import views
+from customuser.forms import CustomAuthForm
 
 urlpatterns = [
     url(r'^djadmin/', admin.site.urls),
-    url(r'^login/', views.login, name='login'),
+    url(r'^login/', views.login, name='login', kwargs={"authentication_form":CustomAuthForm}),
     url(r'^logout/', views.logout, name='logout'),
     url(r'^', include('main.urls')),
     url(r'^criterion/', include('criterion.urls')),

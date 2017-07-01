@@ -31,6 +31,7 @@ class ViroUser(models.Model):
     #     verbose_name='Критерии')
     # REQUIRED_FIELDS = ['region']
 
+
     def save(self, *args, **kwargs):
         criterionlist = self.criterionList
         for crit in criterionlist.criterion.all():

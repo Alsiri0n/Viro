@@ -12,13 +12,15 @@ from django.shortcuts import redirect,reverse
 
 
 class AnswersForm(forms.ModelForm):
+    template_name = "generic/form.html"
+
     class Meta:
         model = Answer
         fields = ['description', 'value']
 
     description = forms.CharField(
         label='Описание',
-        widget=forms.Textarea(attrs={'readonly': 'readonly'})
+        widget=forms.Textarea(attrs={'readonly': 'readonly', 'cols': 5, 'rows': 5})
     )
     value = forms.CharField(label='Значение')
     # criterion = Criterion.objects.filter(pk=1)
@@ -56,8 +58,9 @@ class CriterionUpdate(TemplateView, CategoryListMixin):
         #     # queryset=Answer.objects.get(id=1)
         # )
         formset = AnswerFormSet(
-            queryset=Answer.objects.filter(criterion_id=kwargs['criter_id']),
-            initial={}
+            queryset=Answer.objects.filter(
+                criterion_id=kwargs['criter_id']),
+                initial={}
         )
         self.formset = formset
         return super(CriterionUpdate, self).get(request, *args, **kwargs)
