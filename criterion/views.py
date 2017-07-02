@@ -40,6 +40,7 @@ AnswerFormSet = modelformset_factory(Answer, form=AnswersForm, extra=0)
 
 
 class CriterionView(TemplateView, CategoryListMixin):
+    success_message = "was created successfully"
     template_name = "criterion.html"
     form = None
 
@@ -91,7 +92,7 @@ class CriterionUpdate(TemplateView, CategoryListMixin):
         self.formset = AnswerFormSet(request.POST)
         if self.formset.is_valid():
             self.formset.save()
-            messages.add_message(request, messages.SUCCESS, 'Ответ добавлен')
+            messages.add_message(request, messages.SUCCESS, 'Сохранено')
             return redirect('criterion', kwargs['criter_id'])
         else:
             return super(CriterionUpdate, self).get(request, *args, **kwargs)

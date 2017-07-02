@@ -1,40 +1,57 @@
 {% extends "main.html" %}
 
 
-
 {% block title %}
-    Критерий
+	Критерий
 {% endblock %}
 {% block main %}
-    {% include "generic/messages.html" %}
-    <div class="criterion-description">
-        <p>{{ criterion.description }}</p>
-        <p><b>Возраст: </b>{{ criterion.ages }}</p>
-        <p><b>Предмет исследования: </b>{{ criterion.subject }}</p>
-        <p><b>Цель: </b>{{ criterion.goal }}</p>
-        <p><b>Срок проведения: </b>{{ criterion.deadline }}</p>
-        <p><b>Диагностический инструментарий: </b>{{ criterion.tools }}</p>
-        <p><b>Ответственный за проведение: </b>{{ criterion.responsible }}</p>
-    </div>
-    
-    <form action="" method="post" class = "form">
-        {% csrf_token %}
-        {{ formset.management_form }}
-        {% for form in formset %}
-        <div class="form-group">
-            {% for field in form %}
-                {% if field.name == "description" %}
-                    <p>
-                    {{ field.value }} :&nbsp;
-                    </p>
-                {% else %}
-                    {{ field }}
-                {% endif %}
-            {% endfor %}
-  
-        </div>
-        {% endfor %}
-        <div class="submit-button"><input type="submit" value="Сохранить"></div>
-    </form>
+	
+	<div class="criterion-description">
+		<p>{{ criterion.description }}</p>
+		<p><b>Возраст: </b>{{ criterion.ages }}</p>
+		<p><b>Предмет исследования: </b>{{ criterion.subject }}</p>
+		<p><b>Цель: </b>{{ criterion.goal }}</p>
+		<p><b>Срок проведения: </b>{{ criterion.deadline }}</p>
+		<p><b>Диагностический инструментарий: </b>{{ criterion.tools }}</p>
+		<p><b>Ответственный за проведение: </b>{{ criterion.responsible }}</p>
+	</div>
+	
+	<form action="" method="post" class = "form">
+		{% csrf_token %}
+		{{ formset.management_form }}
+		<table>
+			<tbody>
+				{% for form in formset %}
+					<tr class="form-group">
+						{% for field in form %}
+							{% if field.name == "description" %}
+								<td>
+									<p class="hidden">
+										{{ field }}
+									</p>
+									<p>
+										{{ field.value }} :&nbsp;
+									</p>
+								</td>
+							{% elif field.name == "value" %}
+								<td>
+									{{ field }}
+								
+								{% else %}
+									{{ field }}
+								{% endif %}
+							</td>
+						{% endfor %}
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		
+		
+		<div class="submit-button">
+			{% include "generic/messages.html" %}
+			<input type="submit" value="Сохранить">
+		</div>
+	</form>
 
 {% endblock %}

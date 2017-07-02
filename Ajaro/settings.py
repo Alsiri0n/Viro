@@ -131,3 +131,4 @@ SITE_ID = 1
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'main'
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'

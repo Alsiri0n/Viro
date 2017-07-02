@@ -1,41 +1,50 @@
 header {
     text-align: center;
     padding-top: 1vh;
+    background: #323232;
 }
 header h1 {
     margin: 0 0 20px 0;
     font-family: 'Roboto', sans-serif;
     font-weight: 100;
     color: #323232;
+    background: linear-gradient(to right, #feac5e, #c779d0, #4bc0c8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 h3 {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     color: #323232;
+    background: linear-gradient(to right, #feac5e, #c779d0, #4bc0c8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 aside {
-    float: left;
-    width: 100px;
-    padding: 10px;
+    /*float: left;*/
+    /*width: 100px;*/
+    /*padding: 10px;*/
 }
 
 aside ul {
-    margin: 0;
+    margin: 1em;
     padding: 0;
 }
 
 aside ul li {
-    font-style: larger;
-    list-style-type: none;
-    margin: 0;
+    list-style: none;
+    text-align: left;
+    padding: .5em;
+    color: #323232;
+    
 }
 
 aside ul li a {
     display: block;
+    transition: .2s ease-in-out;
 }
-
-.indented {
-    margin-top: 20px;
+aside ul li a:hover, aside ul li a {
+    color: red;
 }
 
 aside ul li a:link, aside ul li a:visited,
@@ -44,7 +53,7 @@ aside ul li a:active, aside ul li a:hover {
 }
 
 aside ul li a:link, aside ul li a:visited {
-    color: #0000ff;
+    color: #323232;
     background-color: #fff;
 }
 
@@ -54,11 +63,7 @@ aside ul li a.current:active, aside ul li a.current:hover {
     background-color: #ccc;
 }
 
-main {
-    margin-left: 110px;
-    border-left: 1px #ccc solid;
-    padding: 10px;
-}
+
 
 main h2:first-child {
     margin: 0 0 10px 0;
@@ -66,13 +71,19 @@ main h2:first-child {
 
 footer {
     text-align: right;
-    border-top: 1px #ccc solid;
-    padding-right: 10px;
+    background: #323232;
+    /*border-top: 1px #ccc solid;*/
+    /*padding-right: 10px;*/
+    margin-top: auto;
 }
 
 footer p {
     font-size: smaller;
     font-style: italic;
+    padding-right: 10px;
+    background: linear-gradient(to right, #feac5e, #c779d0, #4bc0c8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .honeypot {
@@ -106,6 +117,54 @@ footer p {
 
 .spacer {
     background: linear-gradient(to right, #feac5e, #c779d0, #4bc0c8);
-    height: 1px;
+    height: 5px;
     border: none;
+    margin: 0;
+}
+.main-container {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    /*justify-content: space-between;*/
+    min-height: 100vh;
+    max-width: 980px;
+    margin: auto;
+    box-shadow: 0 0 3px lightgrey;
+}
+.primary {
+    display: flex;
+}
+.submit-button {
+    margin: 3vh 0;
+}
+.submit-button>input {
+    font-family: 'Raleway-Light', sans-serif;
+    background: #4cd964;
+    padding: 10px 20px;
+    border: 1px solid transparent;
+    color: white;
+    transition: all .2s ease-in-out;
+}
+.submit-button>input:hover, .submit-button>input:focus {
+    border-radius: 20px;
+    color: #4cd964;
+    background: transparent;
+    border: 1px solid #4cd964;
+    outline: none;
+}
+.submit-button>input:active {
+    color: white;
+    background: #4cd964;
+}
+
+.hidden {
+    display: none;
+}
+
+td {
+    border: 1px solid red;
+    text-align: right;
+}
+table {
+    border-collapse: collapse;
 }
