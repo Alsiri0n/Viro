@@ -25,7 +25,7 @@
 					<tr class="form-group">
 						{% for field in form %}
 							{% if field.name == "description" %}
-								<td>
+								<td class = "left-column">
 									<p class="hidden">
 										{{ field }}
 									</p>
@@ -33,14 +33,16 @@
 										{{ field.value }} :&nbsp;
 									</p>
 								</td>
-							{% elif field.name == "value" %}
-								<td>
-									{{ field }}
-								
-								{% else %}
-									{{ field }}
-								{% endif %}
-							</td>
+								{% elif field.name == "value" %}
+								<td class = "right-column {% if form.errors %} error{% endif %}" >
+										{{ field }}
+										{% if form.errors %}
+                                        	{{form.non_field_errors  }}
+                                        {% endif %}
+									{% else %}
+										{{ field }}
+									{% endif %}
+								</td>
 						{% endfor %}
 					</tr>
 				{% endfor %}

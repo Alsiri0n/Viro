@@ -8,12 +8,13 @@ from django import forms
 from django.contrib import messages
 from django.forms.models import modelformset_factory
 from django.shortcuts import redirect,reverse
+from django.core.exceptions import ValidationError
 # Create your views here.
 
 
 class AnswersForm(forms.ModelForm):
     template_name = "generic/form.html"
-
+    error_css_class='error12'
     class Meta:
         model = Answer
         fields = ['description', 'value']
@@ -26,13 +27,45 @@ class AnswersForm(forms.ModelForm):
     value = forms.CharField(
         label='',
         widget=forms.TextInput(
-            attrs={'class': 'input-area'})
+            attrs={'class': 'input-area', 'required': True})
     )
-    # value = forms.CharField(label='', widget=forms.Textarea(
-    #     attrs={'class': 'input-area'}))
     
-
-    # criterion = Criterion.objects.filter(pk=1)
+    def clean(self):
+        cleaned_data = super(AnswersForm, self).clean()
+        if cleaned_data['description'] != 'Выводы':
+            if not cleaned_data['value'].isdigit():
+                for f in self.errors:
+                    self.fields[f].widget.\
+                        attrs.update(
+                        {'class': self.fields[f].widget.attrs.get(
+                        'class', '') + ' error'}
+                        )
+                raise ValidationError("Проверьте данные", code="invalid")
+        return cleaned_data
+    
+    def is_valid(self):
+        ret = forms.Form.is_valid(self)
+        if (len(self.errors) == 1) and \
+        (len(self.fields['value'].widget.attrs.get('class', '')) == 
+        len('input-area')
+        ):
+            self.fields['value'].widget.attrs.update(
+                {'class': self.fields['value'].widget.
+                attrs.get('class', '') + ' error',
+                 }
+                )
+        return ret
+    
+    def __init__(self, *args, **kwargs):
+        super(AnswersForm, self).__init__(*args, **kwargs)
+        if kwargs['instance'].description == 'Выводы':
+            self.fields['value'].widget = \
+                forms.Textarea(
+                    attrs={'class': 'input-area',
+                           'required': True,
+                           'cols': 28,
+                           'rows': 5,}
+                )
 
 AnswerFormSet = modelformset_factory(Answer, form=AnswersForm, extra=0)
 
@@ -40,7 +73,7 @@ AnswerFormSet = modelformset_factory(Answer, form=AnswersForm, extra=0)
 
 
 class CriterionView(TemplateView, CategoryListMixin):
-    success_message = "was created successfully"
+    # success_message = "was created successfully"
     template_name = "criterion.html"
     form = None
 
@@ -50,7 +83,7 @@ class CriterionView(TemplateView, CategoryListMixin):
         # context['criterions'] = Criterion.objects.all().order_by('number')
         context['criterions'] = CriterionList.objects.get(
             id=ViroUser.objects.get(
-                region_id=self.request.user.id).criterionList.id).\
+                user_id=self.request.user.id).criterionList.id).\
             criterion.all()
         context['answers'] = Answer.objects.filter(
             criterion_id=kwargs['criter_id'])
@@ -81,7 +114,7 @@ class CriterionUpdate(TemplateView, CategoryListMixin):
         # context['criterions'] = Criterion.objects.all().order_by('number')
         context['criterions'] = CriterionList.objects.get(
             id=ViroUser.objects.get(
-                region_id=self.request.user.id).criterionList.id).\
+                user_id=self.request.user.id).criterionList.id).\
             criterion.all()
         context['formset'] = self.formset
         context['answers'] = Answer.objects.filter(
@@ -95,4 +128,5 @@ class CriterionUpdate(TemplateView, CategoryListMixin):
             messages.add_message(request, messages.SUCCESS, 'Сохранено')
             return redirect('criterion', kwargs['criter_id'])
         else:
+            messages.add_message(request, messages.ERROR, 'Ошибка')
             return super(CriterionUpdate, self).get(request, *args, **kwargs)

@@ -17,11 +17,12 @@
         <aside>
             <ul>
                 {% url "main" as page_url %}
-                <li><a href="{{ page_url }}"{% if page_url == current_url %}class="current" {% endif %}>Главная</a></li>
-                <li><a href="/djadmin/">Админка</a></li>
+                <li {% if page_url == current_url %}class="current" {% endif %}><a href="{{ page_url }}">Главная</a></li>
+                <!--<li><a href="/djadmin/">Админка</a></li>-->
                 <!--<li class="indented"><a href="{% url "logout" %}">Выйти</a></li>-->
                 {% for criter in criterions %}
-                    <li><a href="{% url "criterion" criter.id %}">Критерий {{ forloop.counter }}</a></li>
+                    {% url "criterion" criter.id  as page_url %}
+                    <li {% if page_url == current_url %}class="current" {% endif %}><a href="{{ page_url }}">Критерий {{ forloop.counter }}</a></li>
                 {% endfor %}
             </ul>
         </aside>

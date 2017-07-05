@@ -29,19 +29,52 @@ aside {
 aside ul {
     margin: 1em;
     padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 aside ul li {
     list-style: none;
     text-align: left;
-    padding: .5em;
+    padding: 0 .5em;
     color: #323232;
-    
+
 }
 
-aside ul li a {
-    display: block;
-    transition: .2s ease-in-out;
+aside ul li {
+    padding: 5px;
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px transparent;
+    position: relative;
+    overflow: hidden;
+}
+aside ul li:before {
+
+        content: "";
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    right: 50%;
+    bottom: 0;
+   background: linear-gradient(to right, #feac5e, #c779d0, #4bc0c8);
+    height: 2px;
+    -webkit-transition-property: left, right;
+    transition-property: left, right;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+}
+
+aside ul li:hover:before {
+    left: 0;
+    right: 0;
+ /*   border-bottom: 1px solid transparent;*/
+	/*border-image: linear-gradient(to right, #feac5e, #c779d0, #4bc0c8);*/
+	/*border-image-slice: 1;*/
 }
 aside ul li a:hover, aside ul li a {
     color: red;
@@ -57,13 +90,22 @@ aside ul li a:link, aside ul li a:visited {
     background-color: #fff;
 }
 
-aside ul li a.current:link, aside ul li a.current:visited,
-aside ul li a.current:active, aside ul li a.current:hover {
+aside ul li.current:link, aside ul li.current:visited,
+aside ul li.current:active, aside ul li.current:hover, aside ul li.current {
     color: #000;
-    background-color: #ccc;
+    /*background-color: #ccc;*/
 }
-
-
+aside ul li.current:link:before, aside ul li.current:visited:before,
+aside ul li.current:active:before, aside ul li.current:hover:before, aside ul li.current:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to right, #feac5e, #c779d0, #4bc0c8);
+    height: 2px;
+}
 
 main h2:first-child {
     margin: 0 0 10px 0;
@@ -162,9 +204,11 @@ footer p {
 }
 
 td {
-    border: 1px solid red;
+    /*border: 1px solid red;*/
     text-align: right;
 }
 table {
     border-collapse: collapse;
+    max-width: 60%;
+        table-layout: fixed;
 }
