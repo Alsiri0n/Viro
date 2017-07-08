@@ -11,7 +11,7 @@ class Answer(models.Model):
     #
     # Номер пользователя*10 000 + номер теста * 100 + номер задания
     #
-    number = models.PositiveIntegerField(verbose_name='Номер', unique=True)
+    number = models.PositiveIntegerField(verbose_name='Номер')
 
     @classmethod
     def create(cls, num_, crit, ans):

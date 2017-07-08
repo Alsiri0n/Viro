@@ -33,32 +33,27 @@ class ViroUser(models.Model):
 
 
     def save(self, *args, **kwargs):
-        criterionlist = self.criterionList
-        # if not self.is_stuff:
-        for crit in criterionlist.criterion.all():
-            # user-year-crit 1 17 01=> 11 701
-            curcritid = self.number * 10000 + (crit.year - 2000) * 100 +\
-                        crit.number
-            cur_crit = None
-            if crit.number != curcritid:
-                cur_crit = Criterion.create(crit, curcritid)
-                cur_crit.save()
-                criterionlist.criterion.add(cur_crit)
-                criterionlist.criterion.remove(crit)
-                criterionlist.save()
+        if self.number<100:
+            criterionlist = self.criterionList
+            for crit in criterionlist.criterion.all():
+                # user-year-crit 1 17 01=> 11 701
+                curcritid = self.number * 10000 + (crit.year - 2000) * 100 +\
+                            crit.number
+                cur_crit = None
+                if crit.number != curcritid:
+                    cur_crit = Criterion.create(crit, curcritid)
+                    cur_crit.save()
+                    criterionlist.criterion.add(cur_crit)
+                    criterionlist.criterion.remove(crit)
+                    criterionlist.save()
 
-            for ans in crit.answer_set.all():
-                # user-year-crit-ans: 1 17 01 01 1 170 101
-                curansid = self.number * 1000000 + (crit.year - 2000) * 10000 + \
-                           crit.number * 100 + ans.number
-                if ans.number != curansid:
-                    cur_ans = Answer.create(curansid, cur_crit, ans)
-                    cur_ans.save()
-
-                    # print("ans.descr", ans.description)
-
-                    # print(crit.answer_set.get(id=7).description)
-        # print(criterionlist.criterion.get(number=1))
+                for ans in crit.answer_set.all():
+                    # user-year-crit-ans: 1 17 01 01 1 170 101
+                    curansid = self.number * 1000000 + (crit.year - 2000) * 10000 + \
+                               crit.number * 100 + ans.number
+                    if ans.number != curansid:
+                        cur_ans = Answer.create(curansid, cur_crit, ans)
+                        cur_ans.save()
         super(ViroUser, self).save(*args, **kwargs)
 
     class Meta:

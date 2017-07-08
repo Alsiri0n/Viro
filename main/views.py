@@ -18,5 +18,6 @@ class MainPageView(TemplateView, CategoryListMixin):
                         user_id=self.request.user.id).criterionList.id).\
                     criterion.all()
         else:
-            context['criterions'] = CriterionList.objects.get(pk=1).criterion.all()
+            context['criterions'] = \
+            CriterionList.objects.get(pk=1).criterion.all()
         return context

@@ -2,13 +2,14 @@ from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from generic.mixins import CategoryListMixin
 from criterion.models import Criterion, CriterionList
-from customuser.models import ViroUser
+from customuser.models import ViroUser, Region
 from answer.models import Answer
 from django import forms
 from django.contrib import messages
 from django.forms.models import modelformset_factory
 from django.shortcuts import redirect,reverse
 from django.core.exceptions import ValidationError
+from itertools import chain
 # Create your views here.
 
 
@@ -74,20 +75,40 @@ AnswerFormSet = modelformset_factory(Answer, form=AnswersForm, extra=0)
 
 class CriterionView(TemplateView, CategoryListMixin):
     # success_message = "was created successfully"
-    template_name = "criterion.html"
+    template_name = "criterionView.html"
     form = None
 
     def get_context_data(self, **kwargs):
         context = super(CriterionView, self).get_context_data(**kwargs)
+        #Для шапки
         context['criterion'] = Criterion.objects.get(pk=kwargs["criter_id"])
-        # context['criterions'] = Criterion.objects.all().order_by('number')
+        #Для меню
         context['criterions'] = CriterionList.objects.get(
-            id=ViroUser.objects.get(
-                user_id=self.request.user.id).criterionList.id).\
-            criterion.all()
-        context['answers'] = Answer.objects.filter(
-            criterion_id=kwargs['criter_id'])
+            pk=1).criterion.all()
+        #Для шапки таблицы
+        context['answersh'] = Answer.objects.filter(
+            criterion_id=kwargs['criter_id']).values_list(
+            'description', flat=True)
+        context['region'] = Region.objects.all().\
+            values_list('name', flat=True).order_by('name')
+        qr = Region.objects.all().order_by('name')
+        resultq = ()
+        lend = 0
+        for reg in qr:
+            x = Answer.objects.filter(
+            criterion_id=(
+                Criterion.objects.filter(
+                criterionlist=reg.id)
+                )
+            ).values_list('value', flat=True)
+
+            # context['test_'+str(reg.id)+''] = list(chain((reg.name,), x))
+            resultq = list(chain(resultq, (reg.name,), x))
+            lenx= len(x)+1
+        context['test'] = resultq
+        context['lenx'] = 7
         return context
+
 
 
 class CriterionUpdate(TemplateView, CategoryListMixin):

@@ -21,12 +21,10 @@
                 <!--<li><a href="/djadmin/">Админка</a></li>-->
                 <!--<li class="indented"><a href="{% url "logout" %}">Выйти</a></li>-->
                 {% for criter in criterions %}
-                    {% if user.is_staff %}
-                        {% url "criterion" criter.id "/staff"  as page_url %}
-                    {% else %}
-                        {% url "criterion" criter.id  as page_url %}
-                    {% endif %}
-                    <li {% if page_url == current_url %} class="current" > Критерий {{ forloop.counter }} {% else %}> <a href="{{ page_url }}">Критерий {{ forloop.counter }}</a>{% endif %}</li>
+                    {% url "criterion" criter.id  as page_url %}
+                    <li {% if page_url == current_url %}class="current" {% endif %}>
+                        <a href="{{ page_url }}{% if user.is_staff %}/stuff {% endif %}">Критерий {{ forloop.counter }}</a>
+                    </li>
                 {% endfor %}
             </ul>
         </aside>
@@ -39,5 +37,15 @@
     <footer>
         <hr class="spacer">
         <p>Разработчик: Игнатьев Н. &#9; Дизайн: Котлов Ю.</p>
+                        {% for criter in criterions %}
+                    {% if user.is_staff %}
+                        {% url "criterion" criter.id "/staff"  as page_url %}
+                    {% else %}
+                        {% url "criterion" criter.id  as page_url %}
+                    {% endif %}
+                    <li {% if page_url == current_url %} class="current" > Критерий {{ forloop.counter }} {% else %}> 
+                    <a href="{{ page_url }}{% if user.is_staff %}/stuff {% endif %}">Критерий {{ forloop.counter }}</a>{% endif %}
+                    </li>
+                {% endfor %}
     </footer>
 {% endblock %}
