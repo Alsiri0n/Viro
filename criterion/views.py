@@ -7,7 +7,7 @@ from answer.models import Answer
 from django import forms
 from django.contrib import messages
 from django.forms.models import modelformset_factory
-from django.shortcuts import redirect,reverse
+from django.shortcuts import redirect, reverse
 from django.core.exceptions import ValidationError
 from itertools import chain
 # Create your views here.
@@ -15,7 +15,8 @@ from itertools import chain
 
 class AnswersForm(forms.ModelForm):
     template_name = "generic/form.html"
-    error_css_class='error12'
+    error_css_class = 'error12'
+
     class Meta:
         model = Answer
         fields = ['description', 'value']
@@ -36,25 +37,24 @@ class AnswersForm(forms.ModelForm):
         if cleaned_data['description'] != 'Выводы':
             if not cleaned_data['value'].isdigit():
                 for f in self.errors:
-                    self.fields[f].widget.\
-                        attrs.update(
+                    self.fields[f].widget.attrs.update(
                         {'class': self.fields[f].widget.attrs.get(
-                        'class', '') + ' error'}
-                        )
+                            'class', '') + ' error'})
                 raise ValidationError("Проверьте данные", code="invalid")
         return cleaned_data
     
     def is_valid(self):
         ret = forms.Form.is_valid(self)
-        if (len(self.errors) == 1) and \
-        (len(self.fields['value'].widget.attrs.get('class', '')) == 
-        len('input-area')
+        if (
+                    len(self.errors) == 1
+        ) and (
+                    len(self.fields['value'].widget.attrs.get('class', '')
+                        )
+                    == len('input-area')
         ):
             self.fields['value'].widget.attrs.update(
-                {'class': self.fields['value'].widget.
-                attrs.get('class', '') + ' error',
-                 }
-                )
+                {'class': self.fields['value'].widget.attrs.get(
+                         'class', '') + ' error'})
         return ret
     
     def __init__(self, *args, **kwargs):
@@ -65,7 +65,8 @@ class AnswersForm(forms.ModelForm):
                     attrs={'class': 'input-area',
                            'required': True,
                            'cols': 28,
-                           'rows': 5,}
+                           'rows': 5,
+                           }
                 )
 
 AnswerFormSet = modelformset_factory(Answer, form=AnswersForm, extra=0)
@@ -79,6 +80,8 @@ class CriterionView(TemplateView, CategoryListMixin):
     form = None
 
     def get_context_data(self, **kwargs):
+        resultq = ()
+        lend = 0
         context = super(CriterionView, self).get_context_data(**kwargs)
         # Стафф
         context['staff'] = "asdasdasdasdasasas"
@@ -93,25 +96,22 @@ class CriterionView(TemplateView, CategoryListMixin):
             'description', flat=True)
         context['region'] = Region.objects.all().\
             values_list('name', flat=True).order_by('name')
+        # Набор всех регионов отсортированных по имени
         qr = Region.objects.all().order_by('name')
-        resultq = ()
-        lend = 0
+        # int(kwargs[..]-1 - для выбора нужно критерия
         for reg in qr:
-            x = Answer.objects.filter(
-            criterion_id=(
-                Criterion.objects.filter(
-                criterionlist=ViroUser.objects.filter(region=reg.id).values_list('criterionList')
-                # criterionlist=1
-                ))
-            ).values_list('value', flat=True)
-
-            # context['test_'+str(reg.id)+''] = list(chain((reg.name,), x))
-            resultq = list(chain(resultq, (reg.name,), x))
-            lend= len(x)+1
+            curAns = Answer.objects.filter(
+                criterion_id=(
+                    Criterion.objects.filter(
+                        criterionlist=ViroUser.objects.filter(
+                            region=reg.id).values_list(
+                            'criterionList'))[int(kwargs['criter_id'])-1])).\
+                values_list('value', flat=True)
+            resultq = list(chain(resultq, (reg.name,), curAns))
+            lend = len(curAns)+1
         context['data'] = resultq
         context['lend'] = lend
         return context
-
 
 
 class CriterionUpdate(TemplateView, CategoryListMixin):
@@ -119,16 +119,9 @@ class CriterionUpdate(TemplateView, CategoryListMixin):
     formset = None
 
     def get(self, request, *args, **kwargs):
-        # answer = Answer.objects.get(criterion_id=self.kwargs['criter_id'])
-        # self.formset = AnswersForm(instance=answer)
-        # AnswerFormSet(
-        #     # queryset=Answer.objects.get(id=1)
-        # )
         formset = AnswerFormSet(
             queryset=Answer.objects.filter(
-                criterion_id=kwargs['criter_id']),
-                initial={}
-        )
+                criterion_id=kwargs['criter_id']), initial={})
         self.formset = formset
         return super(CriterionUpdate, self).get(request, *args, **kwargs)
 
