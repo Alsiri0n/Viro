@@ -6,6 +6,6 @@ from answer.models import Answer
 
 class AnswerAdmin(admin.ModelAdmin):
     list_display = ('number', 'criterion', 'description')
-    ordering = ('number',)
+    ordering = ('criterion', 'number',)
 
 admin.site.register(Answer, AnswerAdmin)

@@ -25,7 +25,7 @@ class ViroUser(models.Model):
     criterionList = models.ForeignKey(CriterionList,
                                       verbose_name='Список критериев',
                                       default=None)
-    number = models.PositiveSmallIntegerField(verbose_name="Ид")
+    number = models.PositiveSmallIntegerField(verbose_name="Ид", unique=True)
     # criterion = models.ManyToManyField(
     #     Criterion,
     #     verbose_name='Критерии')

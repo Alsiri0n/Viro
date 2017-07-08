@@ -5,8 +5,6 @@ from django.contrib.auth.models import User
 
 # Register your models here.
 
-admin.site.register(Region)
-
 
 class ViroInline(admin.StackedInline):
     model = ViroUser
@@ -20,6 +18,9 @@ class UserAdmin(BaseUserAdmin):
     inlines = (ViroInline, )
 
 
+class RegionAdmin(admin.ModelAdmin):
+    ordering = ('name',)
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
+admin.site.register(Region, RegionAdmin)

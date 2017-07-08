@@ -58,3 +58,4 @@ class CriterionList(models.Model):
 
     class Meta:
         verbose_name = 'Список критериев'
+        verbose_name_plural = 'Список критериев'

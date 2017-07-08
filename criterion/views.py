@@ -80,12 +80,14 @@ class CriterionView(TemplateView, CategoryListMixin):
 
     def get_context_data(self, **kwargs):
         context = super(CriterionView, self).get_context_data(**kwargs)
-        #Для шапки
+        # Стафф
+        context['staff'] = "asdasdasdasdasasas"
+        # Для шапки
         context['criterion'] = Criterion.objects.get(pk=kwargs["criter_id"])
-        #Для меню
+        # Для меню
         context['criterions'] = CriterionList.objects.get(
             pk=1).criterion.all()
-        #Для шапки таблицы
+        # Для шапки таблицы
         context['answersh'] = Answer.objects.filter(
             criterion_id=kwargs['criter_id']).values_list(
             'description', flat=True)
@@ -98,15 +100,16 @@ class CriterionView(TemplateView, CategoryListMixin):
             x = Answer.objects.filter(
             criterion_id=(
                 Criterion.objects.filter(
-                criterionlist=reg.id)
-                )
+                criterionlist=ViroUser.objects.filter(region=reg.id).values_list('criterionList')
+                # criterionlist=1
+                ))
             ).values_list('value', flat=True)
 
             # context['test_'+str(reg.id)+''] = list(chain((reg.name,), x))
             resultq = list(chain(resultq, (reg.name,), x))
-            lenx= len(x)+1
-        context['test'] = resultq
-        context['lenx'] = 7
+            lend= len(x)+1
+        context['data'] = resultq
+        context['lend'] = lend
         return context
 
 

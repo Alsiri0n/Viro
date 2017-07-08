@@ -11,6 +11,8 @@ class CriterionAdmin(admin.ModelAdmin):
 
 class CriterionListAdmin(admin.ModelAdmin):
     list_display = ('name',)
+    ordering = ('name',)
+    
 
 admin.site.register(Criterion, CriterionAdmin)
 admin.site.register(CriterionList, CriterionListAdmin)
