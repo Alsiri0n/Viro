@@ -1,0 +1,48 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Критерий для анализа
+{% endblock %}
+
+{% block main %}
+    <div class="criterion-description">
+        <p>{{ criterion.description }}</p>
+        <p><b>Возраст: </b>{{ criterion.ages }}</p>
+        <p><b>Предмет исследования: </b>{{ criterion.subject }}</p>
+        <p><b>Цель: </b>{{ criterion.goal }}</p>
+        <p><b>Срок проведения: </b>{{ criterion.deadline }}</p>
+        <p><b>Диагностический инструментарий: </b>{{ criterion.tools }}</p>
+        <p><b>Ответственный за проведение: </b>{{ criterion.responsible }}</p>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Район
+                </th>
+                {% for ansh in answersh %}
+                    <th>
+                        {{ ansh }}
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            {% for d in data %}
+                {% if forloop.counter0|divisibleby:lend and not forloop.first %}
+                    </tr>
+                    <tr>
+                {% endif %}
+                        <td>
+                            {{d}}
+                        </td>
+                {% if forloop.counter0|divisibleby:lend and not forloop.first %}
+                {% endif %}
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+
+
+{% endblock %}
