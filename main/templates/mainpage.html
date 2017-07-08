@@ -3,6 +3,11 @@
     Главная страница
 {% endblock %}
 {% block main %}
-    <p>Если вы не {{ user.first_name }} {{ user.last_name }}, то <a href="{% url "logout" %}">зайдите</a> под своим аккаунтом.</p>
-    <p>Критерии для заполнения находятся слева.</p>
+    {% if user.is_authenticated %}
+        <p>Если вы не {{ user.first_name }} {{ user.last_name }}, то <a href="{% url "logout" %}">зайдите</a> под своим аккаунтом.</p>
+        <p>Критерии для заполнения находятся слева.</p>
+    {% else %}
+        <p>Привет.</p>
+        <p><a href="https://viro-alsirion.c9users.io/login/">Зайдите</a> на сайт, используя логин/пароль, которые вам прислали в письме.</p>
+    {% endif %}
 {% endblock %}

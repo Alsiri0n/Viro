@@ -33,4 +33,25 @@
 	border-image-slice: 1;
 }
 
-
+.submit-button {
+    margin: 3vh 0;
+}
+.submit-button>input {
+    font-family: 'Raleway-Light', sans-serif;
+    background: #4cd964;
+    padding: 10px 20px;
+    border: 1px solid transparent;
+    color: white;
+    transition: all .2s ease-in-out;
+}
+.submit-button>input:hover, .submit-button>input:focus {
+    border-radius: 20px;
+    color: #4cd964;
+    background: transparent;
+    border: 1px solid #4cd964;
+    outline: none;
+}
+.submit-button>input:active {
+    color: white;
+    background: #4cd964;
+}

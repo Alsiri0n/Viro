@@ -34,6 +34,7 @@ class ViroUser(models.Model):
 
     def save(self, *args, **kwargs):
         criterionlist = self.criterionList
+        # if not self.is_stuff:
         for crit in criterionlist.criterion.all():
             # user-year-crit 1 17 01=> 11 701
             curcritid = self.number * 10000 + (crit.year - 2000) * 100 +\
